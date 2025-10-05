@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>自分のこころを見つめなおすメモ</title>
+  <link rel="icon" type="image/png" href="image/anpan.png">
+  <style>
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .mascot-section {
+      display: flex;
+      align-items: center;
+      padding: 30px;
+      background: #f8f9ff;
+      border-bottom: 3px solid #e0e7ff;
+    }
+    .mascot-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #667eea;
+      margin-right: 30px;
+      flex-shrink: 0;
+    }
+    .speech-bubble {
+      position: relative;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      flex-grow: 1;
+    }
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      left: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 15px solid transparent;
+      border-right-color: white;
+    }
+    .speech-bubble p {
+      margin: 0;
+      line-height: 1.8;
+      color: #333;
+    }
+    form {
+      padding: 30px;
+    }
+    .form-group {
+      margin-bottom: 25px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      color: #667eea;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .help-text {
+      font-size: 13px;
+      color: #666;
+      font-weight: normal;
+      margin-left: 5px;
+    }
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e7ff;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      transition: border-color 0.3s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    .small-field { min-height: 80px; }
+    .medium-field { min-height: 120px; }
+    .large-field { min-height: 150px; }
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: linear-gradient(to right, #e0e7ff 0%, #667eea 100%);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>自分のこころを見つめなおすメモ</h1>
+    </div>
+
+    <div class="mascot-section">
+      <img src="image/anpan.png" alt="あんぱん" class="mascot-image">
+      <div class="speech-bubble">
+        <p>こんにちは！どんなことがありましたか？<br>あんぱんと一緒に考えましょう。</p>
+      </div>
+    </div>
+
+    <form id="memoForm">
+      <div class="form-group">
+        <label>状況 <span class="help-text">（何が起こったか、その時自分は何をしたか）</span></label>
+        <textarea id="situation" class="large-field" placeholder="例：友人へのメッセージに既読がついているのに返信がない"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>感情 <span class="help-text">（その状況での感情）</span></label>
+        <textarea id="emotion" class="small-field" placeholder="例：憂鬱、不安、悲しい"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>感情の強度 <span class="help-text">（今まで体験した中で最高の強さを100としたときに今回はいくつか）</span></label>
+        <input type="range" id="intensity" min="0" max="100" value="50" step="1">
+        <div style="text-align: center; margin-top: 8px; font-size: 18px; font-weight: bold; color: #667eea;">
+          <span id="intensityValue">50</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>自動思考 <span class="help-text">（浮かんだ考えやイメージ）</span></label>
+        <textarea id="thought" class="medium-field" placeholder="例：自分は嫌われているかと思った"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>根拠 <span class="help-text">（自動思考を裏付ける証拠）</span></label>
+        <textarea id="evidence" class="medium-field" placeholder="例：先日の会話が友人から顰蹙をかったかもしれない"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>反証 <span class="help-text">（自動思考に反する事実）</span></label>
+        <textarea id="counter" class="medium-field" placeholder="例：相手も忙しいだけかもしれない"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>もう一度冷静になって考えてみる <span class="help-text">（別の視点や過去の経験から）</span></label>
+        <textarea id="rethink" class="large-field" placeholder="・ポジティブな時期だったらどう受け止めたか&#10;・友人が同じ状況ならどう思うか&#10;・類似の経験はなかったか、その時問題は起きたか"></textarea>
+      </div>
+
+      <div class="mascot-section">
+        <img src="image/anpan.png" alt="あんぱん" class="mascot-image">
+        <div class="speech-bubble">
+            <p>お疲れ様でしたぽよ</p>
+      </div>
+    </div>
+
+      <button type="submit">保存してダウンロード</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("memoForm");
+    const intensitySlider = document.getElementById("intensity");
+    const intensityValue = document.getElementById("intensityValue");
+
+    intensitySlider.addEventListener("input", function() {
+      intensityValue.textContent = intensitySlider.value;
+    });
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const situation = document.getElementById("situation").value;
+      const emotion = document.getElementById("emotion").value;
+      const intensity = document.getElementById("intensity").value;
+      const thought = document.getElementById("thought").value;
+      const evidence = document.getElementById("evidence").value;
+      const counter = document.getElementById("counter").value;
+      const rethink = document.getElementById("rethink").value;
+
+      const content =
+`自分のこころを見つめなおすメモ
+
+◼状況
+${situation}
+
+◼感情
+${emotion}
+
+◼感情の強度
+${intensity}
+
+◼自動思考
+${thought}
+
+◼根拠
+${evidence}
+
+◼反証
+${counter}
+
+◼もう一度冷静になって考えてみる
+${rethink}
+`;
+
+      const blob = new Blob([content], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const now = new Date();
+      const filename = `mindMemo_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}.txt`;
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      form.reset();
+    });
+  </script>
+</body>
+</html>
